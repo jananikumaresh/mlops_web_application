@@ -1,0 +1,11 @@
+- name: Build Python App with PyCrucible
+  # You may pin to the exact commit or the version.
+  # uses: razorblade23/pycrucible-action@fcd0e906edafca9e4838f311eab47e03ef38115a
+  uses: razorblade23/pycrucible-action@v4
+  with:
+    # Path to the entry folder or file
+    entry: # optional, default is .
+    # Path to output binary
+    output: # optional, default is dist/app
+    # PyCrucible version to use (defaults to latest release)
+    version: # optional
