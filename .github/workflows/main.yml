@@ -1,11 +1,42 @@
-- name: Build Python App with PyCrucible
-  # You may pin to the exact commit or the version.
-  # uses: razorblade23/pycrucible-action@fcd0e906edafca9e4838f311eab47e03ef38115a
-  uses: razorblade23/pycrucible-action@v4
-  with:
-    # Path to the entry folder or file
-    entry: # optional, default is .
-    # Path to output binary
-    output: # optional, default is dist/app
-    # PyCrucible version to use (defaults to latest release)
-    version: # optional
+name: Python Application CI
+
+# Trigger the workflow on pushes or pull requests to the main branch
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+    # Step 1: Check out the repository code
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    # Step 2: Set up the Python environment
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.12' # Specify your preferred Python version
+        cache: 'pip'           # Caches pip dependencies automatically
+
+    # Step 3: Install project dependencies
+    - name: Install dependencies
+      run: |
+        python -m pip upgrade pip
+        if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+
+    # Step 4: Lint code to check for style errors (Optional)
+    - name: Lint with Ruff
+      run: |
+        pip install ruff
+        ruff check .
+
+    # Step 5: Run your application tests
+    - name: Run tests
+      run: |
+        pip install pytest
+        pytest
