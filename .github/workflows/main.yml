@@ -1,6 +1,6 @@
 name: Python Application CI
 
-# Trigger the workflow on pushes or pull requests to the main branch
+
 on:
   push:
     branches: [ "main" ]
@@ -12,24 +12,24 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    # Step 1: Check out the repository code
+    
     - name: Checkout code
       uses: actions/checkout@v4
 
-    # Step 2: Set up the Python environment
+   
     - name: Set up Python
       uses: actions/setup-python@v5
       with:
-        python-version: '3.12' # Specify your preferred Python version
-        cache: 'pip'           # Caches pip dependencies automatically
+        python-version: '3.12' 
+        cache: 'pip'           
 
-    # Step 3: Install project dependencies
+    
     - name: Install dependencies
       run: |
         python -m pip upgrade pip
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
 
-    # Step 4: Lint code to check for style errors (Optional)
+   
     - name: Lint with Ruff
       run: |
         pip install ruff
